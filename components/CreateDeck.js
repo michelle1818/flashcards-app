@@ -59,7 +59,6 @@ class CreateDeck extends Component {
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
         <View style={styles.container}>
           <TextInput
-            underlineColorAndroid='#2962ff'
             style={styles.title}
             onChangeText={value => this.handleChangeText(value)}
             value={title}

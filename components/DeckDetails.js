@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { blue, blueHighlight, white } from '../utils/colors';
+import { blueHighlight, white } from '../utils/colors';
 import Button from './Button';
 
 class DeckDetails extends Component {
@@ -9,10 +9,10 @@ class DeckDetails extends Component {
     const { itemIndex, deck } = this.props;
     return (
       
-      <View style={[styles.deckItem, { marginTop: (parseInt(itemIndex) === 0) ? 20 : 0 }]}>
+      <View style={[styles.deckDetail, { marginTop: (parseInt(itemIndex) === 0) ? 20 : 0 }]}>
           <View>
-          <Text style={styles.deckTitle}>{deck.title}</Text>
-            <Text style={styles.cardNumber}>{deck.questions.length} Cards</Text>
+          <Text style={styles.title}>{deck.title}</Text>
+            <Text style={styles.number}>{deck.questions.length} Cards</Text>
           </View>
           <View style={{marginTop:20}}>
             <Button onPress={() => this.props.goToDeck(deck.title)}><Text style={{ fontWeight: 'bold' }}>View Deck</Text></Button>
@@ -24,7 +24,7 @@ class DeckDetails extends Component {
 }
 
 const styles = StyleSheet.create({
-  deckItem: {
+  deckDetail: {
     backgroundColor: white,
     borderRadius: 10,
     padding: 20,
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
       height: 3
     } 
   },
-  deckTitle: {
+  title: {
     marginBottom: 8,
     fontSize: 24,
     color: 'black',
     fontWeight: "bold",
     textAlign:'center'
   },
-  cardNumber: {
+  number: {
     color: blueHighlight,
     fontSize: 17,
     paddingTop:0,
