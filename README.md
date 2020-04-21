@@ -1,7 +1,7 @@
 
 # Flashcards App
 
-This flashcard application allows the user to manage decks of flashcards, create and delete cards, and take quizzes.
+This flashcard application is an easy way to study, practice and master what you’re learning. Create your own flashcards to help you study and learn!
 
 ## Description
 
@@ -36,7 +36,7 @@ Open Expo Client on your device. Scan the QR code printed by expo start with Exp
 
 ### Testing
 
-The application was tested on an iPhone XR. 
+The application was tested on Android and iOS. 
 
 ## Contributions
 

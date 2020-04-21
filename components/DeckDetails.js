@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { blue, blueHighlight, white } from '../utils/colors';
 import Button from './Button';
 
-class DeckListItem extends Component {
+class DeckDetails extends Component {
 
   render() {
     const { itemIndex, deck } = this.props;
@@ -15,7 +15,7 @@ class DeckListItem extends Component {
             <Text style={styles.cardNumber}>{deck.questions.length} Cards</Text>
           </View>
           <View style={{marginTop:20}}>
-            <Button onPress={() => this.props.navigateToDeck(deck.title)}><Text style={{ fontWeight: 'bold' }}>View Deck</Text></Button>
+            <Button onPress={() => this.props.goToDeck(deck.title)}><Text style={{ fontWeight: 'bold' }}>View Deck</Text></Button>
           </View>
           
         </View>
@@ -32,11 +32,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 10,
     marginRight:10,
-    justifyContent: 'center',
     alignItems:'center',
-    shadowRadius: 3,
     shadowOpacity: 0.95,
-    elevation: 25,
     shadowColor: 'blue',
     shadowOffset: {
       width: 0,
@@ -46,7 +43,7 @@ const styles = StyleSheet.create({
   deckTitle: {
     marginBottom: 8,
     fontSize: 24,
-    color: '#222',
+    color: 'black',
     fontWeight: "bold",
     textAlign:'center'
   },
@@ -54,9 +51,9 @@ const styles = StyleSheet.create({
     color: blueHighlight,
     fontSize: 17,
     paddingTop:0,
-    color: '#333',
+    color: 'black',
     textAlign: 'center'
   }
 });
 
-export default DeckListItem;
+export default DeckDetails;

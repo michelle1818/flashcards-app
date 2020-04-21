@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
         paddingTop: 13,
         paddingBottom: 13,
         margin: 5,
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        backgroundColor: 'white',
         width: 180,
         borderRadius: 5,
         color: black,
         textAlign: 'center',
         fontSize: 16,
-        borderColor: 'rgba(0,0,0,0.8)',
+        borderColor: 'black',
         borderStyle: 'solid',
         borderWidth: 2
     }

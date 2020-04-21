@@ -7,24 +7,24 @@ import { connect } from 'react-redux';
 import { addNewCard } from '../actions';
 import Button from './Button';
 
-class AddCardScreen extends PureComponent {
+class AddCard extends PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
       question: '',
       answer: '',
-      questionTooShort: false,
-      questionTooShortNote: 'The question is too short!',
-      answerTooShort: false,
-      answerTooShortNote: 'The answer is too short!',
+      qTooShort: false,
+      qTooShortNote: 'The question is too short!',
+      aTooShort: false,
+      aTooShortNote: 'The answer is too short!',
     };
   }
 
   createCard = () => {
-    const { question, answer, questionTooShort, answerTooShort } = this.state;
+    const { question, answer, qTooShort, aTooShort } = this.state;
 
-    if(!questionTooShort && !answerTooShort && question.trim().length>1 && answer.trim().length>1) {
+    if(!qTooShort && !aTooShort && question.trim().length>1 && answer.trim().length>1) {
       const cardObj = {
         question: this.state.question,
         answer: this.state.answer
@@ -55,26 +55,26 @@ class AddCardScreen extends PureComponent {
     let textTooShortNoteField = '';
     let textToShow = '';
     if (sourceInput && sourceInput === "question") {
-      textToShow = this.state.questionTooShortNote;
+      textToShow = this.state.qTooShortNote;
       if (!(value.trim().length > 6)) {
         isShort = true;
         if (!(value.trim().length > 0)) {
           textToShow = "The Question field is required"
         }
       }
-      textTooShortField = "questionTooShort";
-      textTooShortNoteField = "questionTooShortNote";
+      textTooShortField = "qTooShort";
+      textTooShortNoteField = "qTooShortNote";
     } else if (sourceInput && sourceInput === "answer") {
       
-      textToShow = this.state.answerTooShortNote;
+      textToShow = this.state.aTooShortNote;
       if (!(value.trim().length > 1)) {
         isShort = true;
         if (!(value.trim().length > 0)) {
           textToShow = "The Answer field is required"
         }
       }
-      textTooShortField = "answerTooShort";
-      textTooShortNoteField = "answerTooShortNote";
+      textTooShortField = "aTooShort";
+      textTooShortNoteField = "aTooShortNote";
     }
     if (sourceInput) {
       this.setState(() => ({ [textTooShortField]: isShort, [textTooShortNoteField]: textToShow,[sourceInput]:value}))
@@ -82,7 +82,7 @@ class AddCardScreen extends PureComponent {
   }
 
   render() {
-    const { question, answer, questionTooShortNote, questionTooShort, answerTooShort, answerTooShortNote } = this.state;
+    const { question, answer, qTooShortNote, qTooShort, aTooShort, aTooShortNote } = this.state;
     return (
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
         <View style={styles.container}>
@@ -91,20 +91,20 @@ class AddCardScreen extends PureComponent {
             style={styles.input}
             onChangeText={question => this.handleChangeText(question, 'question')}
             value={question}
-            placeholder="Question"
+            placeholder="Type in the Question"
             placeholderTextColor={black}
           />
-          {questionTooShort && <Text style={styles.error}>{questionTooShortNote}</Text>}
+          {qTooShort && <Text style={styles.error}>{qTooShortNote}</Text>}
 
           <TextInput
             underlineColorAndroid='#2962ff'
             style={styles.input}
             onChangeText={answer => this.handleChangeText(answer,'answer')}
             value={answer}
-            placeholder="Answer"
+            placeholder="Type in the Answer"
             placeholderTextColor={black}
           />
-          {answerTooShort && <Text style={styles.error}>{answerTooShortNote}</Text>}
+          {aTooShort && <Text style={styles.error}>{aTooShortNote}</Text>}
 
           <View style={{ marginTop: 10, alignSelf: 'center' }}>
             <Button onPress={this.createCard}><Text style={{ fontWeight: 'bold' }}>Create Card</Text></Button>
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 15,
     marginBottom: 10,
+    textAlign: "center",
     fontSize: 17
   },
   buttonWrapper: {
@@ -144,4 +145,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ addNewCard }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(AddCardScreen);
+export default connect(null, mapDispatchToProps)(AddCard);

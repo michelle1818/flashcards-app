@@ -6,32 +6,32 @@ import { setLocalNotification, clearLocalNotification } from '../utils/notificat
 import Button from './Button';
 import LighterButton from './LighterButton';
 
-const NoCardsError = () => (
+const NoCards = () => (
   <View style={styles.noCards}>
-    <Text style={styles.noCardsText}>Sorry, you cannot take a quiz because there are no cards in the deck.</Text>
+    <Text style={styles.noCardsText}>Please add cards to this deck.</Text>
   </View>
 );
 
-const ResultScreen = (props) => (
+const Results = (props) => (
   <View style={styles.resultCard}>
-    <Text style={styles.resultCardText}>Total Questions Answered: {props.totalAnswered}</Text>
+    <Text style={styles.resultCardText}>Total Answered: {props.totalAnswered}</Text>
     <Text style={styles.resultCardText}>Correct Answers: {props.correct}</Text>
     <View style={{marginTop:50}}>
-      <LighterButton onPress={props.restart}><Text style={{ fontWeight: 'bold' }}>Restart</Text></LighterButton>
+      <LighterButton onPress={props.restart}><Text style={{ fontWeight: 'bold' }}>Play the quiz again!</Text></LighterButton>
     </View>
     <View style={{ marginTop: 10 }}>
-      <Button onPress={props.goBack}><Text style={{ fontWeight: 'bold' }}>Go Back</Text></Button>
+      <Button onPress={props.goBack}><Text style={{ fontWeight: 'bold' }}>Return to the deck</Text></Button>
     </View>
   </View>
 );
 
-const ShowQuestionOrAnswerView = (props) => (
+const QorAView = (props) => (
   <TouchableWithoutFeedback onPress={props.toggle}>
     <View style={styles.showText} >
       {
         props.current == 'question'
-          ? <Text style={styles.showText}>Show Answer</Text>
-          : <Text style={styles.showText}>Show Question</Text>
+          ? <Text style={styles.showText}>Reveal the correct answer</Text>
+          : <Text style={styles.showText}>Go back to the question</Text>
       }
     </View>
   </TouchableWithoutFeedback>
@@ -39,7 +39,7 @@ const ShowQuestionOrAnswerView = (props) => (
 
 class Quiz extends PureComponent {
 
-  showQuestionOrAnswer = () => {
+  showQorA = () => {
     const show = (this.state.show) === 'question'
       ? 'answer'
       : 'question'
@@ -47,10 +47,10 @@ class Quiz extends PureComponent {
     this.setState({ show });
 
 
-    this.flipCard();
+    this.flip();
   }
   
-  userAnswered(answer) {
+  theAnswer(answer) {
     if (answer === 'correct') {
       this.setState({ correctAnswers: this.state.correctAnswers + 1});
     }
@@ -63,7 +63,7 @@ class Quiz extends PureComponent {
 
     if (this.state.show === "answer") {
       this.setState({ show: 'question' });
-      this.flipCard();
+      this.flip();
     }
 
   }
@@ -105,7 +105,7 @@ class Quiz extends PureComponent {
 
   }
 
-  frontCardStyle() {
+  frontCard() {
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['0deg', '180deg']
@@ -118,7 +118,7 @@ class Quiz extends PureComponent {
     return frontAnimatedStyle
   }
 
-  backCardStyle() {
+  backCard() {
     this.backInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg']
@@ -128,7 +128,7 @@ class Quiz extends PureComponent {
     return backAnimatedStyle
   }
 
-  flipCard() {
+  flip() {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
@@ -147,12 +147,12 @@ class Quiz extends PureComponent {
   render() {
 
     if (this.props.questions.length === 0) {
-      return <NoCardsError />
+      return <NoCards />
     }
 
     if (this.state.showResults) {
       return (
-        <ResultScreen
+        <Results
           totalAnswered={this.props.questions.length}
           correct={this.state.correctAnswers}
           restart={this.restartQuiz}
@@ -161,54 +161,54 @@ class Quiz extends PureComponent {
       );
     }
     
-    const showingCard = this.props.questions[this.state.currentQuestion];
+    const viewCard = this.props.questions[this.state.currentQuestion];
  
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.quizProgress} >
-          <Text style={{fontWeight:'bold',fontSize:16,color:white}}>Card {this.state.currentQuestion + 1}/{this.props.questions.length}</Text>
+        <View style={styles.quizQNumber} >
+          <Text style={{fontWeight:'bold',fontSize:16,color:white, textAlign:'center'}}>Card {this.state.currentQuestion + 1}/{this.props.questions.length}</Text>
         </View>
 
-        {/* Card Front view showing the question which will be flipped */}
-        <Animated.View style={[styles.quizCard, this.frontCardStyle(), { display: (this.state.show === "question" ? 'flex' : 'none') }]}>
+        {/* Front of card */}
+        <Animated.View style={[styles.quizCard, this.frontCard(), { display: (this.state.show === "question" ? 'flex' : 'none') }]}>
           {
             this.state.show == 'question'
-              ? <Text style={styles.questionText}>{showingCard.question}</Text>
-              : <Text style={styles.answerText}>{showingCard.answer}</Text>
+              ? <Text style={styles.questionText}>{viewCard.question}</Text>
+              : <Text style={styles.answerText}>{viewCard.answer}</Text>
           }
-          <ShowQuestionOrAnswerView
-            toggle={this.showQuestionOrAnswer}
+          <QorAView
+            toggle={this.showQorA}
             current={this.state.show}
           />
           <View>
             <View>
-              <LighterButton onPress={() => this.userAnswered('correct')}><Text style={{ fontWeight: 'bold' }}>Correct</Text></LighterButton>
+              <LighterButton onPress={() => this.theAnswer('correct')}><Text style={{ fontWeight: 'bold' }}>I knew it</Text></LighterButton>
             </View>
             <View style={{ marginTop: 10 }}>
-              <Button onPress={() => this.userAnswered('incorrect')}><Text style={{ fontWeight: 'bold' }}>Incorrect</Text></Button>
+              <Button onPress={() => this.theAnswer('incorrect')}><Text style={{ fontWeight: 'bold' }}>I didn't know it</Text></Button>
             </View>
            
           </View>
         </Animated.View>
 
-        {/* Card Back view showing the answer which will be flipped */}
-        <Animated.View style={[styles.quizCard, this.backCardStyle(), styles.flipCardBack, { display: (this.state.show==="answer"?'flex':'none')}]}>
+        {/* Back of Card */}
+        <Animated.View style={[styles.quizCard, this.backCard(), styles.flipCardBack, { display: (this.state.show==="answer"?'flex':'none')}]}>
           {
             this.state.show == 'question'
-              ? <Text style={styles.questionText}>{showingCard.question}</Text>
-              : <Text style={styles.answerText}>{showingCard.answer}</Text>
+              ? <Text style={styles.questionText}>{viewCard.question}</Text>
+              : <Text style={styles.answerText}>{viewCard.answer}</Text>
           }
-          <ShowQuestionOrAnswerView
-            toggle={this.showQuestionOrAnswer}
+          <QorAView
+            toggle={this.showQorA}
             current={this.state.show}
           />
          
           <View>
             <View>
-              <LighterButton onPress={() => this.userAnswered('correct')}><Text style={{ fontWeight: 'bold' }}>Correct</Text></LighterButton>
+              <LighterButton onPress={() => this.theAnswer('correct')}><Text style={{ fontWeight: 'bold' }}>I knew it</Text></LighterButton>
             </View>
             <View style={{ marginTop: 10 }}>
-              <Button onPress={() => this.userAnswered('incorrect')}><Text style={{ fontWeight: 'bold' }}>Incorrect</Text></Button>
+              <Button onPress={() => this.theAnswer('incorrect')}><Text style={{ fontWeight: 'bold' }}>I didn't know it</Text></Button>
             </View>
 
           </View>
@@ -270,11 +270,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10
   },
-  quizProgress: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+  quizQNumber: {
     padding: 8,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'blue',
     marginTop: 10,
     color:white
   },
@@ -308,7 +306,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: red 
+    color: 'rgb(230, 23, 23)'
   },
   showText: {
     fontWeight: 'bold',

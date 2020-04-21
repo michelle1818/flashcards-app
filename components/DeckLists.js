@@ -3,7 +3,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getAllDecks } from '../actions';
-import DeckListItem from './DeckListItem';
+import DeckDetails from './DeckDetails';
 
 class DeckList extends Component {
 
@@ -11,9 +11,9 @@ class DeckList extends Component {
     this.props.getAllDecks();
   }
 
-  _keyExtractor = (item, index) => (index.toString());
+  key = (item, index) => (index.toString());
 
-  navigateToDeck = (deck) => {
+  goToDeck = (deck) => {
     this.props.navigation.navigate('Deck', { deck });
   }
 
@@ -22,11 +22,11 @@ class DeckList extends Component {
       <FlatList 
         style={styles.deckList}
         data={Object.values(this.props.decks)}
-        keyExtractor={this._keyExtractor}
+        keyExtractor={this.key}
         renderItem={({ item,index }) => (
-          <DeckListItem 
+          <DeckDetails 
             deck={item} 
-            navigateToDeck={this.navigateToDeck} 
+            goToDeck={this.goToDeck} 
             itemIndex={index}
           />
         )}

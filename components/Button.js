@@ -19,12 +19,15 @@ const styles = StyleSheet.create({
     paddingTop: 13,
     paddingBottom:13,
     margin: 5,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'blue',
     width: 180,
     borderRadius: 5,
     color: white,
     textAlign: 'center',
-    fontSize:16
+    fontSize:16,
+    borderColor: 'blue',
+    borderStyle: 'solid',
+    borderWidth: 2
   }
 });
 

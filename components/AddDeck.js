@@ -63,7 +63,7 @@ class AddDeck extends Component {
             style={styles.titleInput}
             onChangeText={value => this.handleChangeText(value)}
             value={title}
-            placeholder="Deck Title"
+            placeholder="What is the deck title?"
             placeholderTextColor={black}
           />
           {textTooShort && <Text style={styles.error}>{textTooShortNote}</Text>}
@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 35,
     marginBottom: 0,
+    textAlign: "center",
     fontSize: 17
+    
   },
   buttonWrapper: {
     alignItems: "center"
