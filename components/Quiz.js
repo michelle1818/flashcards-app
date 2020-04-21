@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { View, Text, TouchableWithoutFeedback, Animated, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { red , white } from '../utils/colors';
-import { setLocalNotification, clearLocalNotification } from '../utils/notifications';
+import { white } from '../utils/colors';
+import { setNotif, clearNotif } from '../utils/notifications';
 import Button from './Button';
 import LighterButton from './LighterButton';
 
@@ -81,8 +81,8 @@ class Quiz extends PureComponent {
       showResults: false
     });
 
-    clearLocalNotification()
-      .then(setLocalNotification)
+    clearNotif()
+      .then(setNotif)
     
   }
 

@@ -50,34 +50,34 @@ class AddCard extends PureComponent {
   }
 
   handleChangeText = (value, sourceInput) => {
-    let isShort = false;
-    let textTooShortField = '';
-    let textTooShortNoteField = '';
-    let textToShow = '';
+    let short = false;
+    let tooShortField = '';
+    let tooShortNote = '';
+    let textView = '';
     if (sourceInput && sourceInput === "question") {
-      textToShow = this.state.qTooShortNote;
+      textView = this.state.qTooShortNote;
       if (!(value.trim().length > 6)) {
-        isShort = true;
+        short = true;
         if (!(value.trim().length > 0)) {
-          textToShow = "The Question field is required"
+          textView = "The Question field is required"
         }
       }
-      textTooShortField = "qTooShort";
-      textTooShortNoteField = "qTooShortNote";
+      tooShortField = "qTooShort";
+      tooShortNote = "qTooShortNote";
     } else if (sourceInput && sourceInput === "answer") {
       
-      textToShow = this.state.aTooShortNote;
+      textView = this.state.aTooShortNote;
       if (!(value.trim().length > 1)) {
-        isShort = true;
+        short = true;
         if (!(value.trim().length > 0)) {
-          textToShow = "The Answer field is required"
+          textView = "The Answer field is required"
         }
       }
-      textTooShortField = "aTooShort";
-      textTooShortNoteField = "aTooShortNote";
+      tooShortField = "aTooShort";
+      tooShortNote = "aTooShortNote";
     }
     if (sourceInput) {
-      this.setState(() => ({ [textTooShortField]: isShort, [textTooShortNoteField]: textToShow,[sourceInput]:value}))
+      this.setState(() => ({ [tooShortField]: short, [tooShortNote]: textView,[sourceInput]:value}))
     }
   }
 
@@ -87,7 +87,6 @@ class AddCard extends PureComponent {
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
         <View style={styles.container}>
           <TextInput
-            underlineColorAndroid='#2962ff'
             style={styles.input}
             onChangeText={question => this.handleChangeText(question, 'question')}
             value={question}
@@ -97,7 +96,6 @@ class AddCard extends PureComponent {
           {qTooShort && <Text style={styles.error}>{qTooShortNote}</Text>}
 
           <TextInput
-            underlineColorAndroid='#2962ff'
             style={styles.input}
             onChangeText={answer => this.handleChangeText(answer,'answer')}
             value={answer}

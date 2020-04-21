@@ -16,14 +16,12 @@ export function getAllDecks() {
   }
 }
 
-
 export function addNewDeck(deck) {
   return {
     type: ADD_DECK,
     payload: deck
   }
 }
-
 
 export function addNewCard(deck, card) {
   return {

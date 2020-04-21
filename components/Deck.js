@@ -7,8 +7,8 @@ import LighterButton from './LighterButton';
 class OneDeck extends Component {
 
 
-  nav = (screen) => {
-    this.props.navigation.nav(screen, {
+  navigate = (screen) => {
+    this.props.navigation.navigate(screen, {
       deckTitle: this.props.deck.title
     })
   }
@@ -33,10 +33,10 @@ class OneDeck extends Component {
         </View>
         <View>
           <View>
-            <LighterButton onPress={() => this.nav('AddCard')}><Text style={{ fontWeight: 'bold' }}>Add Card</Text></LighterButton>
+            <LighterButton onPress={() => this.navigate('AddCard')}><Text style={{ fontWeight: 'bold' }}>Add Card</Text></LighterButton>
           </View>
           <View style={{marginTop:10}}>
-            <Button onPress={() => this.nav('Quiz')}><Text style={{ fontWeight: 'bold' }}>Start Quiz</Text></Button>
+            <Button onPress={() => this.navigate('Quiz')}><Text style={{ fontWeight: 'bold' }}>Start Quiz</Text></Button>
           </View>
         </View>
       </View>

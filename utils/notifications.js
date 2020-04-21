@@ -4,9 +4,9 @@ import * as Permissions from 'expo-permissions';
 
 const FLASHCARDS_NOTIF_KEY = 'UdaciFlashcards:notifications';
 
-function createNotification() {
+function createNotif() {
   return {
-    title: 'Reminder: Please take a quiz!',
+    title: "Reminder: You haven't studied today!",
     body: "Don't forget to complete a quiz today!",
     ios: {
       sound: true
@@ -20,12 +20,12 @@ function createNotification() {
   }
 }
 
-export function clearLocalNotification () {
+export function clearNotif () {
   return AsyncStorage.removeItem(FLASHCARDS_NOTIF_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-export function setLocalNotification () {
+export function setNotif () {
   AsyncStorage.getItem(FLASHCARDS_NOTIF_KEY)
     .then(JSON.parse)
     .then((data) => {
@@ -40,7 +40,7 @@ export function setLocalNotification () {
               tomorrow.setHours(20)
 
               Notifications.scheduleLocalNotificationAsync(
-                createNotification(),
+                createNotif(),
                 {
                   time: tomorrow,
                   repeat: 'day',

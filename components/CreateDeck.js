@@ -7,20 +7,20 @@ import { connect } from 'react-redux';
 import { addNewDeck } from '../actions';
 import Button from './Button';
 
-class AddDeck extends Component {
+class CreateDeck extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
       title: '',
-      textTooShort: false,
-      textTooShortNote: "The name of this deck is too short!"
+      inputTooShort: false,
+      tooShortNote: "The name of this deck is too short!"
     };
   }
 
   createDeck = () => {
-    const { title, textTooShort } = this.state;
-    if (!textTooShort && title.trim().length > 1) {
+    const { title, inputTooShort } = this.state;
+    if (!inputTooShort && title.trim().length > 1) {
       
       saveDeckTitle(title);
 
@@ -43,30 +43,30 @@ class AddDeck extends Component {
 
   handleChangeText = (value) => {
     let isShort = false;
-    let textToShow = this.state.textTooShortNote;
+    let textToShow = this.state.tooShortNote;
     if (!(value.trim().length > 3)) {
       isShort = true;
       if (!(value.trim().length > 0)) {
         textToShow="A Deck Title is required!"
       }
     }
-    this.setState(() => ({ textTooShort: isShort, textTooShortNote: textToShow, title:value }))
+    this.setState(() => ({ inputTooShort: isShort, tooShortNote: textToShow, title:value }))
   }
 
   render() {
-    const { textTooShortNote, title, textTooShort } = this.state;
+    const { tooShortNote, title, inputTooShort } = this.state;
     return (
       <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
         <View style={styles.container}>
           <TextInput
             underlineColorAndroid='#2962ff'
-            style={styles.titleInput}
+            style={styles.title}
             onChangeText={value => this.handleChangeText(value)}
             value={title}
             placeholder="What is the deck title?"
             placeholderTextColor={black}
           />
-          {textTooShort && <Text style={styles.error}>{textTooShortNote}</Text>}
+          {inputTooShort && <Text style={styles.err}>{tooShortNote}</Text>}
           <View style={{ marginTop: 10, alignSelf: 'center' }}>
             <Button onPress={this.createDeck}><Text style={{ fontWeight: 'bold' }}>Create Deck</Text></Button>
           </View>
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
 
   },
-  error: {
+  err: {
     fontWeight: 'bold',
     textAlign: 'center',
     color: red,
     marginBottom:20
   },
-  titleInput: {
+  title: {
     padding: 10,
     marginTop: 35,
     marginBottom: 0,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 17
     
   },
-  buttonWrapper: {
+  button: {
     alignItems: "center"
   }
 });
@@ -107,4 +107,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ addNewDeck }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(AddDeck);
+export default connect(null, mapDispatchToProps)(CreateDeck);
