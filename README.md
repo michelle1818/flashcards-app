@@ -7,6 +7,10 @@ This flashcard application is an easy way to study, practice and master what you
 
 This flashcard app allows users to quiz themselves on decks of flashcards. The user can record whether they were correct or incorrect. At the end of the quiz, the score is displayed. The user can also create a new deck of flash cards. Each card requires a question and answer for the deck's topic. 
 
+## Demo 
+
+![Demo](https://github.com/michelleginsburg/Flashcards-App/blob/master/assets/mock.gif)
+
 ## How to Load the App
 
 Note: Make sure you have the latest Yarn (or Node.js) and Expo installed.<br>
